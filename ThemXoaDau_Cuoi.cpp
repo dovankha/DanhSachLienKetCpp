@@ -1,15 +1,15 @@
 #include <iostream>
 using namespace std;
 
-//De: Nhap danh sach lien ket cac phan so
-//Quan li danh sach lien ket bang con tro dau nen khong co khoi tao danh sach lien ket
+//De: Nhap danh sach lien ket cac phan so, sau do them, xoa phan so.
+//Quan li danh sach lien ket bang con tro dau nen khong co khoi tao danh sach lien ket.
 
 struct phanSo
 {
 	int tuSo, mauSo;
 };
 
-void nhapPhanSo(phanSo& ps)
+void nhapPhanSo(phanSo &ps)
 {
 	cout << "\nNhap tu so: ";
 	cin >> ps.tuSo;
@@ -37,7 +37,7 @@ int timUCLN(int x, int y)
 	return x;
 }
 
-void rutGonPhanSo(phanSo& ps)
+void rutGonPhanSo(phanSo &ps)
 {
 	int ucln = timUCLN(ps.tuSo, ps.mauSo);
 	ps.tuSo = ps.tuSo / ucln;
@@ -51,7 +51,6 @@ void xuatPhanSo(phanSo ps)
 		cout << ps.tuSo << "/" << ps.mauSo;
 		rutGonPhanSo(ps);
 		cout << " = " << ps.tuSo;
-		
 	}
 	else
 	{
@@ -66,12 +65,12 @@ void xuatPhanSo(phanSo ps)
 struct node
 {
 	phanSo data; // du lieu la phan so.
-	node* next;
+	node *next;
 };
 
-node* khoiTaoNode(phanSo x)
+node *khoiTaoNode(phanSo x)
 {
-	node* p = new node;
+	node *p = new node;
 	if (p == NULL)
 	{
 		cout << "\nKhong du bo nho cap phat!" << endl;
@@ -82,7 +81,7 @@ node* khoiTaoNode(phanSo x)
 	return p;
 }
 
-void themDau(node*& head, node* p)
+void themDau(node *&head, node *p)
 {
 	if (head == NULL)
 		head = p;
@@ -93,13 +92,13 @@ void themDau(node*& head, node* p)
 	}
 }
 
-void themCuoi(node*& head, node* p)
+void themCuoi(node *&head, node *p)
 {
 	if (head == NULL)
 		head = p;
 	else
 	{
-		for (node* i = head; ; i = i->next)
+		for (node *i = head;; i = i->next)
 		{
 			// neu i dang xet ma tro den null thi chinh la node cuoi
 			if (i->next == NULL)
@@ -111,42 +110,42 @@ void themCuoi(node*& head, node* p)
 	}
 }
 
-void themNodePSauNodeQ(node*& head, phanSo x, node* q)
+void themNodePSauNodeQ(node *&head, phanSo x, node *q)
 {
 	// duyet danh sach kiem tra xem co ton tai phan tu q khong
-	for (node* i = head; i != NULL; i = i->next)
+	for (node *i = head; i != NULL; i = i->next)
 	{
 		if (i->data.tuSo == q->data.tuSo && i->data.mauSo == q->data.mauSo)
 		{
-			node* p = khoiTaoNode(x);
+			node *p = khoiTaoNode(x);
 			p->next = i->next;
 			i->next = p;
 		}
 	}
 }
 
-void xoaDau(node*& head)
+void xoaDau(node *&head)
 {
 	if (head == NULL)
 		return;
-	node* p = head;
+	node *p = head;
 	head = head->next;
-	delete p; 
+	delete p;
 }
 
-void xoaCuoi(node*& head)
+void xoaCuoi(node *&head)
 {
 	if (head == NULL)
 		return;
-	if (head->next == NULL)	// neu danh sach ton tai 1 node
+	if (head->next == NULL) // neu danh sach ton tai 1 node
 	{
-		node* p = head;
+		node *p = head;
 		head = NULL;
-		delete p;			// xoa duy nhat 1 thang trong danh sach
+		delete p; // xoa duy nhat 1 thang trong danh sach
 		return;
 	}
 	// xu li 2 phan tu tro len
-	for (node* i = head; ; i = i->next)
+	for (node *i = head;; i = i->next)
 	{
 		if (i->next->next == NULL)
 		{
@@ -157,29 +156,29 @@ void xoaCuoi(node*& head)
 	}
 }
 
-void xoaNodeSauQ(node*& head, node* q)
+void xoaNodeSauQ(node *&head, node *q)
 {
-	for (node* i = head; i != NULL; i = i->next)
+	for (node *i = head; i != NULL; i = i->next)
 	{
 		if (i->data.tuSo == q->data.tuSo && i->data.mauSo == q->data.mauSo && i->next != NULL)
 		{
-			node* temp = i->next;	// giu tam lien ket voi thang can xoa (nam sau thang co san)
-			i->next = i->next->next;// lien ket node co san voi node sau thang xoa
-			delete temp;			// xoa thang nam sau node co san
+			node *temp = i->next;	 // giu tam lien ket voi thang can xoa (nam sau thang co san)
+			i->next = i->next->next; // lien ket node co san voi node sau thang xoa
+			delete temp;			 // xoa thang nam sau node co san
 		}
 	}
 }
 
-void xuatDanhSachPhanSo(node* head)
+void xuatDanhSachPhanSo(node *head)
 {
-	for (node* i = head; i != NULL; i = i->next)
+	for (node *i = head; i != NULL; i = i->next)
 	{
 		xuatPhanSo(i->data);
 		cout << endl;
 	}
 }
 
-void menu(node*& head)
+void menu(node *&head)
 {
 	while (true)
 	{
@@ -206,7 +205,7 @@ void menu(node*& head)
 		{
 			phanSo x;
 			nhapPhanSo(x);
-			node* p = khoiTaoNode(x);
+			node *p = khoiTaoNode(x);
 			themCuoi(head, p);
 		}
 		else if (luaChon == 2)
@@ -226,7 +225,7 @@ void menu(node*& head)
 			nhapPhanSo(x);
 			cout << "\n\t===== NHAP GIA TRI PHAN SO CO SAN =====" << endl;
 			nhapPhanSo(y);
-			node* p = khoiTaoNode(y);
+			node *p = khoiTaoNode(y);
 			themNodePSauNodeQ(head, x, p);
 		}
 		else if (luaChon == 6)
@@ -234,7 +233,7 @@ void menu(node*& head)
 			phanSo x;
 			cout << "\n\t***** NHAP PHAN SO CO SAN *****" << endl;
 			nhapPhanSo(x);
-			node* q = khoiTaoNode(x);
+			node *q = khoiTaoNode(x);
 			xoaNodeSauQ(head, q);
 		}
 		else
@@ -244,7 +243,7 @@ void menu(node*& head)
 
 int main()
 {
-	node* head = NULL;
+	node *head = NULL;
 	menu(head);
 	system("pause");
 	return 0;
